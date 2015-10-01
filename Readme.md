@@ -71,6 +71,13 @@ This one is only used when linking against debug or custom versions of Qt. For
 instance, in debug, the libs are suffixed with a `d`. And when building your
 own version of Qt, you might want to suffix the x64 and x86 versions differently.
 
+#####qtlibsuffix "libsuffix"
+
+Default value is .lib in order to maintain capabilty with original premake-qt.
+This setting allows to change qt libraries type instead of allways added .lib.
+This change allows to build qt applications with preamke-qt on Linux where 
+libraries may have extension .a or .so.
+
 #####qtmodules { "module", "module", ...}
 
 Specify which module you want to use. The available modules are (for the moment)

@@ -131,7 +131,8 @@ function premake.extensions.qt.customBakeConfig(base, wks, prj, buildcfg, platfo
 			local module	= modules[modulename]
 			local prefix	= config.qtprefix or ""
 			local suffix	= config.qtsuffix or ""
-			local libname	= prefix .. module.name .. suffix .. ".lib"
+			local libsuffix = config.qtlibsuffix or ".lib"
+			local libname	= prefix .. module.name .. suffix .. libsuffix
 
 			-- configure the module
 			table.insert(config.includedirs, qtpath .. "/include/" .. module.include)

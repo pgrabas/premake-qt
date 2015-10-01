@@ -32,6 +32,12 @@ premake.api.register {
 	kind = "string"
 }
 
+premake.api.register {
+	name = "qtlibsuffix",
+	scope = "config",
+	kind = "string"
+}
+
 --
 -- Specify the modules to use (will handle include paths, links, etc.)
 -- See premake.extensions.qt.modules for a list of available modules.
