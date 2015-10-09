@@ -120,7 +120,11 @@ function premake.extensions.qt.customBakeConfig(base, wks, prj, buildcfg, platfo
 	config.qtpath = qtpath
 
 	-- add the includes and libraries directories
-	table.insert(config.includedirs, qtpath .. "/include")
+	
+	--location of header may be different
+	local qtheaderpath = config.qtheaderpath or (qtpath .. "/include")
+	
+	table.insert(config.includedirs, qtheaderpath)
 	table.insert(config.libdirs, qtpath .. "/lib")
 
 	-- add the modules
@@ -135,7 +139,7 @@ function premake.extensions.qt.customBakeConfig(base, wks, prj, buildcfg, platfo
 			local libname	= prefix .. module.name .. suffix .. libsuffix
 
 			-- configure the module
-			table.insert(config.includedirs, qtpath .. "/include/" .. module.include)
+			table.insert(config.includedirs, qtheaderpath .. "/" .. module.include)
 			table.insert(config.links, libname)
 			if module.defines ~= nil then
 				qt.mergeDefines(config, module.defines)

@@ -15,6 +15,15 @@ premake.api.register {
 }
 
 --
+-- Set the path where Qt headers are located
+--
+premake.api.register {
+	name = "qtheaderpath",
+	scope = "config",
+	kind = "path"
+}
+
+--
 -- Set the prefix of the libraries ("Qt4" or "Qt5" usually)
 --
 premake.api.register {
@@ -32,6 +41,9 @@ premake.api.register {
 	kind = "string"
 }
 
+--
+-- Set a suffix for the library files
+--
 premake.api.register {
 	name = "qtlibsuffix",
 	scope = "config",

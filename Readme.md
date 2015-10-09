@@ -10,10 +10,6 @@ projects are built using Premake** ! You need to re-run Premake when adding
 new Qt classes, UIs, etc. or when you add **Q_OBJECT** to one of your existing
 classes.
 
-It should support any action which has support for custom build commands, but
-I only tested this addon with the Visual Studio actions, so I'm not sure of its
-behavior when using gmake, or any other action.
-
 Please feel free to drop a comment, issue or whatever if you notice a bug. Also,
 if you take the time to do so, please also take the time to create a small
 reproductible scenario that you can attach to the issue :)
@@ -58,6 +54,10 @@ to the current configuration block.
 
 Setup the path where Qt include and lib folders are found. If this is not used,
 the addon will try to get the path from the `QTDIR` or `QT_DIR` environment variable.
+
+#####qtheaderpath "path"
+
+Alternative location Qt headers. If not provided defaults to value of qtpath.
 
 #####qtprefix "prefix"
 
@@ -131,7 +131,7 @@ Basic Use
 
 Here is a small example of how to use the addon :
 
-
+Visual Studio:
 ```lua
 --
 -- Include the Qt functionalities and create a shortcut
@@ -198,6 +198,45 @@ solution "TestQt"
 			qtsuffix "d"
 		configuration { }
 ```
+
+
+Linux and gmake action:
+```lua
+require( "premake-qt/qt.lua" )
+local qt = premake.extensions.qt
+
+solution "TestQt"
+	project "TestQt"
+		files { "**.h", "**.cpp", "**.ui" "**.qrc" }
+		location "bin"
+		
+		qt.enable()
+		qtpath "/usr"
+		qtheaderpath "/usr/include/qt/"
+		qtmodules { "core", "gui", "widgets", "opengl" }
+		qtprefix "Qt5"
+		qtlibsuffix "" -- this also works under Visual Studio
+		
+		links "TestQt_ui"
+
+		configuration { "Debug" }
+			qtsuffix "d"
+		configuration { }
+		
+	project "TestQt_ui" --this is not a beautiful solution, but it works
+		files { "**.ui" }
+		location "bin" -- location must be the same as the parent project
+		
+		qt.enable()
+		qtpath "/usr"
+		qtheaderpath "/usr/include/qt"
+		qtmodules { "core", "gui", "widgets", "opengl" }
+		qtprefix "Qt5"
+	
+```
+
+In the example above shows how to overcome issue when ui files are not processed before
+corresponding cpp files.
 
 Adding modules
 --------------
